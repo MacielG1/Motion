@@ -5,6 +5,7 @@ import Logo from './Logo';
 import { ThemeToggler } from '../ThemeToggler';
 import { SignInButton, UserButton } from '@clerk/clerk-react';
 import { Button } from '../ui/button';
+import Loading from '../Loading';
 import Link from 'next/link';
 
 export default function Navbar() {
@@ -15,7 +16,11 @@ export default function Navbar() {
       <nav className="z-50 flexColumn bg-background dark:bg-neutral-900 fixed top-0 flex items-center  w-full p-6">
         <Logo />
         <div className="jusCenter justify-end w-full flex items-center gap-3 md:ml-auto">
-          {isLoading && <span>Loading</span>}
+          {isLoading && (
+            <span>
+              <Loading />
+            </span>
+          )}
           {!isLoading && !isAuthenticated && (
             <>
               <SignInButton mode="modal">
