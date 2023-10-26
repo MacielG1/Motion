@@ -90,7 +90,7 @@ export default function Item({ onClick, Icon, label, id, noteIcon, active, expan
 
       {isSearch && (
         <kbd className="pointer-events-none ml-auto inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[0.7rem] font-medium text-muted-foreground opacity-100">
-          <span className="text-xs">{/Mac|iPod|iPhone|iPad/.test(navigator.userAgent) ? <span>⌘</span> : <span>CTRL</span>}</span>K
+          <span className="text-xs">{/Mac|iPod|iPhone|iPad/.test(navigator.userAgent) ? <span>⌘</span> : <span>CTRL</span>} + </span>K
         </kbd>
       )}
 

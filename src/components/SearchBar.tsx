@@ -23,7 +23,7 @@ export default function SearchBar() {
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
-      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+      if (e.key === "j" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
         toggle();
       }
@@ -45,7 +45,7 @@ export default function SearchBar() {
       <CommandInput placeholder="Search" />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
-        <CommandGroup heading="Documents">
+        <CommandGroup heading="Notes">
           {notes?.map((note) => (
             <CommandItem key={note._id} value={`${note._id}-${note.title}`} title={note.title} onSelect={handleSelect}>
               {note?.icon ? <span className="mr-2 text-[1rem]">{note.icon}</span> : <File className="mr-2 h-4 w-4" />}

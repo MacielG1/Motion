@@ -15,6 +15,7 @@ import NotesList from "./NotesList";
 import UserItem from "./User";
 import { useSettings } from "@/hooks/useSettings";
 import { useSearch } from "@/hooks/useSearch";
+import Archived from "./Archived";
 
 export default function MainNav() {
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -112,7 +113,7 @@ export default function MainNav() {
     const promise = createNote({
       title: "New Document",
     }).then((documentId) => {
-      router.push(`/documents/${documentId}`);
+      router.push(`/notes/${documentId}`);
     });
 
     toast.promise(promise, {
@@ -146,16 +147,18 @@ export default function MainNav() {
           <UserItem />
           <Item onClick={search.onOpen} Icon={Search} label="Search" isSearch />
           <Item onClick={settings.onOpen} Icon={Settings} label="Settings" />
-          <Item onClick={handleCreateNote} Icon={PlusCircle} label="New Page" />
+          <Item onClick={handleCreateNote} Icon={PlusCircle} label="New Note" />
         </div>
-        <div className="mt-4">
+        <div className="py-1">
           <NotesList />
-          <Item onClick={handleCreateNote} Icon={Plus} label="Add a page" />
+          <Item onClick={handleCreateNote} Icon={Plus} label="Add Note" />
           <Popover>
             <PopoverTrigger className="mt-4 w-full">
               <Item label="Trash" Icon={Trash} />
             </PopoverTrigger>
-            <PopoverContent className="w-72 p-0" side={isMobile ? "bottom" : "right"}></PopoverContent>
+            <PopoverContent className="w-72 p-0" side={isMobile ? "bottom" : "right"}>
+              <Archived />
+            </PopoverContent>
           </Popover>
         </div>
         <span className="pl-[0.135rem] text-muted-foreground">
@@ -176,7 +179,7 @@ export default function MainNav() {
           isMobile && "left-0 w-full",
         )}
       >
-        {params.documentId ? (
+        {params.noteId ? (
           <Navbar isCollapsed={isCollapsed} onResetWidth={resetSidebarWidth} />
         ) : (
           <nav className="w-full bg-transparent px-3 py-2">
@@ -184,6 +187,13 @@ export default function MainNav() {
           </nav>
         )}
       </div>
+      {!!params.noteId ? (
+        <Navbar isCollapsed={isCollapsed} onResetWidth={resetSidebarWidth} />
+      ) : (
+        <nav className="w-full bg-transparent px-3 py-2">
+          {isCollapsed && <MenuIcon onClick={resetSidebarWidth} role="button" className="h-6 w-6" />}
+        </nav>
+      )}
     </>
   );
 }

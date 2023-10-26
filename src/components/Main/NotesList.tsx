@@ -53,7 +53,7 @@ export default function NotesList({ parentNoteId, level = 0 }: DocumentListProps
         style={{ paddingLeft: level ? `${level * 12 + 25}px` : undefined }}
         className={cn("hidden py-[0.2rem] text-sm font-medium text-muted-foreground/80", expanded && "last:block", level === 0 && "hidden")}
       >
-        No Pages
+        No Notes
       </p>
       {notes.map((note) => (
         <div key={note._id}>
