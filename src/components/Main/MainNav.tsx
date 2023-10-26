@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { ChevronsLeftIcon, MenuIcon, Plus, Trash } from "lucide-react";
+import { ChevronsLeftIcon, MenuIcon, Plus, PlusCircle, Search, Settings, Trash } from "lucide-react";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ElementRef } from "react";
@@ -12,6 +12,8 @@ import { api } from "../../../convex/_generated/api";
 import { useMutation } from "convex/react";
 import toast from "react-hot-toast";
 import NotesList from "./NotesList";
+import UserItem from "./User";
+import { useSettings } from "@/hooks/useSettings";
 
 export default function MainNav() {
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -21,6 +23,7 @@ export default function MainNav() {
   const isResizingRef = useRef(false);
   const sidebarRef = useRef<HTMLElement>(null);
   const navbarRef = useRef<ElementRef<"div">>(null);
+  const settings = useSettings();
 
   const pathname = usePathname();
   const params = useParams();
@@ -137,7 +140,12 @@ export default function MainNav() {
         >
           <ChevronsLeftIcon className="h-6 w-6" />
         </div>
-        <div>Items menu</div>
+        <div>
+          <UserItem />
+          {/* SEARCH ITEM */}
+          <Item onClick={settings.onOpen} Icon={Settings} label="Settings" />
+          <Item onClick={handleCreateNote} Icon={PlusCircle} label="New Page" />
+        </div>
         <div className="mt-4">
           <NotesList />
           <Item onClick={handleCreateNote} Icon={Plus} label="Add a page" />
