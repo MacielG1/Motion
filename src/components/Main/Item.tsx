@@ -80,13 +80,17 @@ export default function Item({ onClick, Icon, label, id, noteIcon, active, expan
           <ChevronIcon className="h-4 w-4 shrink-0 text-muted-foreground/50" />
         </span>
       )}
-      {noteIcon ? <span className="mr-2 shrink-0 text-[1.2rem]">{noteIcon}</span> : <Icon className="mr-2 h-[1.2rem] w-[1.2rem] shrink-0 text-muted-foreground" />}
+      {noteIcon ? (
+        <span className="mr-2 shrink-0 text-[1.2rem]">{noteIcon}</span>
+      ) : (
+        <Icon className="mr-2 h-[1.2rem] w-[1.2rem] shrink-0 text-muted-foreground" />
+      )}
 
       <span className="truncate">{label}</span>
 
       {isSearch && (
         <kbd className="pointer-events-none ml-auto inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[0.7rem] font-medium text-muted-foreground opacity-100">
-          <span className="text-xs">ctrl</span>k
+          <span className="text-xs">{/Mac|iPod|iPhone|iPad/.test(navigator.userAgent) ? <span>⌘</span> : <span>CTRL</span>}</span>K
         </kbd>
       )}
 
@@ -94,7 +98,10 @@ export default function Item({ onClick, Icon, label, id, noteIcon, active, expan
         <div className="ml-auto flex items-center gap-x-2" role="button" onClick={onCreate}>
           <DropdownMenu>
             <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
-              <div role="button" className="ml-auto h-full rounded-sm p-[0.15rem] opacity-0 hover:bg-neutral-300 group-hover:opacity-100 hover:dark:bg-neutral-600">
+              <div
+                role="button"
+                className="ml-auto h-full rounded-sm p-[0.15rem] opacity-0 hover:bg-neutral-300 group-hover:opacity-100 hover:dark:bg-neutral-600"
+              >
                 <MoreHorizontal className="h-4 w-4 text-muted-foreground" />
               </div>
             </DropdownMenuTrigger>

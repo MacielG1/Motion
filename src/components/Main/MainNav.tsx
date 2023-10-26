@@ -14,6 +14,7 @@ import toast from "react-hot-toast";
 import NotesList from "./NotesList";
 import UserItem from "./User";
 import { useSettings } from "@/hooks/useSettings";
+import { useSearch } from "@/hooks/useSearch";
 
 export default function MainNav() {
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -24,6 +25,7 @@ export default function MainNav() {
   const sidebarRef = useRef<HTMLElement>(null);
   const navbarRef = useRef<ElementRef<"div">>(null);
   const settings = useSettings();
+  const search = useSearch();
 
   const pathname = usePathname();
   const params = useParams();
@@ -142,7 +144,7 @@ export default function MainNav() {
         </div>
         <div>
           <UserItem />
-          {/* SEARCH ITEM */}
+          <Item onClick={search.onOpen} Icon={Search} label="Search" isSearch />
           <Item onClick={settings.onOpen} Icon={Settings} label="Settings" />
           <Item onClick={handleCreateNote} Icon={PlusCircle} label="New Page" />
         </div>
@@ -168,12 +170,18 @@ export default function MainNav() {
       </aside>
       <div
         ref={navbarRef}
-        className={cn("absolute left-60 top-0 z-[99999] w-[calc(100%-240px)] ", isResetting && "transition-all ease-in-out", isMobile && "left-0 w-full")}
+        className={cn(
+          "absolute left-60 top-0 z-[99999] w-[calc(100%-240px)] ",
+          isResetting && "transition-all ease-in-out",
+          isMobile && "left-0 w-full",
+        )}
       >
         {params.documentId ? (
           <Navbar isCollapsed={isCollapsed} onResetWidth={resetSidebarWidth} />
         ) : (
-          <nav className="w-full bg-transparent px-3 py-2">{isCollapsed && <MenuIcon onClick={resetSidebarWidth} role="button" className="h-6 w-6" />}</nav>
+          <nav className="w-full bg-transparent px-3 py-2">
+            {isCollapsed && <MenuIcon onClick={resetSidebarWidth} role="button" className="h-6 w-6" />}
+          </nav>
         )}
       </div>
     </>
