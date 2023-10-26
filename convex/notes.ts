@@ -13,7 +13,7 @@ export const createNote = mutation({
 
     const userId = id.subject;
 
-    const doc = await context.db.insert('notes', {
+    const note = await context.db.insert('notes', {
       title: args.title,
       userId,
       parentNote: args.parentNote,
@@ -21,7 +21,7 @@ export const createNote = mutation({
       isPublished: false,
     });
 
-    return doc;
+    return note;
   },
 });
 
@@ -36,7 +36,7 @@ export const getNotes = query({
 
     const userId = id.subject;
 
-    const docs = await context.db
+    const notes = await context.db
       .query('notes')
       .withIndex('by_user_parent', (q) =>
         q.eq('userId', userId).eq('parentNote', args.parentNote)
@@ -45,7 +45,7 @@ export const getNotes = query({
       .order('desc')
       .collect();
 
-    return docs;
+    return notes;
   },
 });
 
@@ -56,10 +56,10 @@ export const archiveNote = mutation({
     if (!id) throw new Error('Not logged in');
 
     const userId = id.subject;
-    const existingDoc = await context.db.get(args.id);
+    const existingNote = await context.db.get(args.id);
 
-    if (!existingDoc) throw new Error('Document not found');
-    if (existingDoc.userId !== userId) throw new Error('Not authorized');
+    if (!existingNote) throw new Error('Note not found');
+    if (existingNote.userId !== userId) throw new Error('Not authorized');
 
     async function deleteChildNotes(noteId: Id<'notes'>) {
       const children = await context.db
@@ -77,13 +77,13 @@ export const archiveNote = mutation({
       }
     }
 
-    const doc = await context.db.patch(args.id, {
+    const note = await context.db.patch(args.id, {
       isArchived: true,
     });
 
     deleteChildNotes(args.id);
 
-    return doc;
+    return note;
   },
 });
 
@@ -94,14 +94,14 @@ export const getArchivedNotes = query({
 
     const userId = id.subject;
 
-    const docs = await context.db
+    const notes = await context.db
       .query('notes')
       .withIndex('by_user', (q) => q.eq('userId', userId))
       .filter((q) => q.eq(q.field('isArchived'), true))
       .order('desc')
       .collect();
 
-    return docs;
+    return notes;
   },
 });
 
@@ -113,9 +113,9 @@ export const restoreNote = mutation({
 
     const userId = id.subject;
 
-    const existingDoc = await context.db.get(args.id);
-    if (!existingDoc) throw new Error('Note not found');
-    if (existingDoc.userId !== userId) throw new Error('Not authorized');
+    const existingNote = await context.db.get(args.id);
+    if (!existingNote) throw new Error('Note not found');
+    if (existingNote.userId !== userId) throw new Error('Not authorized');
 
     async function restoreChildNotes(noteId: Id<'notes'>) {
       const children = await context.db
@@ -135,17 +135,17 @@ export const restoreNote = mutation({
 
     const options: Partial<Doc<'notes'>> = { isArchived: false };
 
-    if (existingDoc.parentNote) {
-      const parent = await context.db.get(existingDoc.parentNote);
+    if (existingNote.parentNote) {
+      const parent = await context.db.get(existingNote.parentNote);
 
       if (parent?.isArchived) {
         options.parentNote = undefined;
       }
     }
-    const doc = await context.db.patch(args.id, options);
+    const note = await context.db.patch(args.id, options);
     restoreChildNotes(args.id);
 
-    return doc;
+    return note;
   },
 });
 
@@ -158,13 +158,13 @@ export const deleteNote = mutation({
 
     const userId = id.subject;
 
-    const existingDoc = await context.db.get(args.id);
-    if (!existingDoc) throw new Error('Note not found');
-    if (existingDoc.userId !== userId) throw new Error('Not authorized');
+    const existingNote = await context.db.get(args.id);
+    if (!existingNote) throw new Error('Note not found');
+    if (existingNote.userId !== userId) throw new Error('Not authorized');
 
-    const doc = await context.db.delete(args.id);
+    const note = await context.db.delete(args.id);
 
-    return doc;
+    return note;
   },
 });
 
@@ -175,14 +175,14 @@ export const searchNotes = query({
 
     const userId = id.subject;
 
-    const docs = await context.db
+    const notes = await context.db
       .query('notes')
       .withIndex('by_user', (q) => q.eq('userId', userId))
       .filter((q) => q.eq(q.field('isArchived'), false))
       .order('desc')
       .collect();
 
-    return docs;
+    return notes;
   },
 });
 
@@ -191,19 +191,19 @@ export const getNoteById = query({
   handler: async (context, args) => {
     const id = await context.auth.getUserIdentity();
 
-    const doc = await context.db.get(args.noteId);
-    if (!doc) throw new Error('Note not found');
+    const note = await context.db.get(args.noteId);
+    if (!note) throw new Error('Note not found');
 
-    if (doc.isPublished && !doc.isArchived) {
-      return doc;
+    if (note.isPublished && !note.isArchived) {
+      return note;
     }
 
     if (!id) throw new Error('Not logged in');
 
     const userId = id.subject;
-    if (doc.userId !== userId) throw new Error('Not authorized');
+    if (note.userId !== userId) throw new Error('Not authorized');
 
-    return doc;
+    return note;
   },
 });
 
@@ -223,15 +223,15 @@ export const updateNote = mutation({
     const userId = ID.subject;
 
     const { id, ...rest } = args;
-    const existingDoc = await context.db.get(id);
+    const existingNote = await context.db.get(id);
 
-    if (!existingDoc) throw new Error('Note not found');
+    if (!existingNote) throw new Error('Note not found');
 
-    if (existingDoc.userId !== userId) throw new Error('Not authorized');
+    if (existingNote.userId !== userId) throw new Error('Not authorized');
 
-    const doc = await context.db.patch(id, { ...rest });
+    const note = await context.db.patch(id, { ...rest });
 
-    return doc;
+    return note;
   },
 });
 
@@ -243,16 +243,16 @@ export const removeIcon = mutation({
 
     const userId = id.subject;
 
-    const existingDoc = await context.db.get(args.id);
-    if (!existingDoc) throw new Error('Note not found');
+    const existingNote = await context.db.get(args.id);
+    if (!existingNote) throw new Error('Note not found');
 
-    if (existingDoc.userId !== userId) throw new Error('Not authorized');
+    if (existingNote.userId !== userId) throw new Error('Not authorized');
 
-    const doc = await context.db.patch(args.id, {
+    const note = await context.db.patch(args.id, {
       icon: undefined,
     });
 
-    return doc;
+    return note;
   },
 });
 
@@ -265,15 +265,15 @@ export const removeCoverImage = mutation({
 
     const userId = id.subject;
 
-    const existingDoc = await context.db.get(args.id);
-    if (!existingDoc) throw new Error('Note not found');
+    const existingNote = await context.db.get(args.id);
+    if (!existingNote) throw new Error('Note not found');
 
-    if (existingDoc.userId !== userId) throw new Error('Not authorized');
+    if (existingNote.userId !== userId) throw new Error('Not authorized');
 
-    const doc = await context.db.patch(args.id, {
+    const note = await context.db.patch(args.id, {
       coverImage: undefined,
     });
 
-    return doc;
+    return note;
   },
 });

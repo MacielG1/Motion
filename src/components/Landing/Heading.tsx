@@ -26,7 +26,7 @@ export default function Heading() {
 
       {!isLoading && isAuthenticated && (
         <Button asChild>
-          <Link href="/documents">
+          <Link href="/notes">
             Open Motion
             <ArrowRightCircle className="ml-2 h-4 w-4" />
           </Link>

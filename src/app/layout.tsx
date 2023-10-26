@@ -4,6 +4,8 @@ import './globals.css';
 import { ThemeProvider } from '@/providers/ThemeProvider';
 import ConvexProvider from '@/providers/ConvexProvider';
 import { icons } from '@/lib/icons';
+import { Toaster } from 'react-hot-toast';
+import { toastOptions } from '@/lib/toastOptions';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -27,7 +29,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ConvexProvider>{children}</ConvexProvider>
+          <ConvexProvider>
+            {children}
+            <Toaster toastOptions={toastOptions} position="top-right" />
+          </ConvexProvider>
         </ThemeProvider>
       </body>
     </html>

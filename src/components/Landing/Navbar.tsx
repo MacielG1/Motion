@@ -40,7 +40,7 @@ export default function Navbar() {
                 size="sm"
                 className="ring-1 ring-neutral-400 dark:ring-neutral-800"
               >
-                <Link href="/documents">Open</Link>
+                <Link href="/notes">Open</Link>
               </Button>
               <UserButton afterSignOutUrl="/" />
             </>

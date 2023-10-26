@@ -1,6 +1,6 @@
 'use client';
 import Loading from '@/components/Loading';
-import Main from '@/components/Main/Main';
+import MainNav from '@/components/Main/MainNav';
 import { useConvexAuth } from 'convex/react';
 import { redirect } from 'next/navigation';
 
@@ -24,7 +24,7 @@ export default function MainLayout({
 
   return (
     <div className="h-full flex dark:bg-neutral-900">
-      <Main />
+      <MainNav />
       <main className="flex-1 h-full overflow-y-auto">{children}</main>
     </div>
   );
