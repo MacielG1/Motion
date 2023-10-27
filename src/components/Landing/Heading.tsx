@@ -31,8 +31,8 @@ export default function Heading() {
         </Button>
       )}
       {!isLoading && !isAuthenticated && (
-        <SignInButton mode="modal">
-          <Button variant="ghost" size="sm">
+        <SignInButton mode="modal" afterSignInUrl="/notes">
+          <Button size="sm">
             Join Motion Free
             <ArrowRightCircle className="ml-2 h-4 w-4" />
           </Button>

@@ -31,7 +31,7 @@ export default function ConfirmModal({ children, onConfirm }: Props) {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-          <AlertDialogDescription>You can't undo this action.</AlertDialogDescription>
+          <AlertDialogDescription>You can&apos;t undo this action.</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={(e) => e.stopPropagation()}>Cancel</AlertDialogCancel>

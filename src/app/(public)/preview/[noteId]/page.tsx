@@ -6,7 +6,6 @@ import Toolbar from "@/components/Toolbar";
 import CoverImage from "@/components/CoverImage";
 import dynamic from "next/dynamic";
 import { useMemo } from "react";
-import CoverSkeleton from "@/components/Skeletons/CoverSkeleton";
 
 type Props = {
   params: {
@@ -29,7 +28,7 @@ export default function NotePreviePage({ params }: Props) {
 
   if (note === undefined) {
     // is loading
-    return <CoverSkeleton />;
+    return null;
   }
 
   if (note === null) {
