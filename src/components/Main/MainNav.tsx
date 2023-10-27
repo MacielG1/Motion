@@ -111,15 +111,15 @@ export default function MainNav() {
 
   function handleCreateNote() {
     const promise = createNote({
-      title: "New Document",
-    }).then((documentId) => {
-      router.push(`/notes/${documentId}`);
+      title: "New Note",
+    }).then((noteId) => {
+      router.push(`/notes/${noteId}`);
     });
 
     toast.promise(promise, {
       loading: "Creating Note...",
       success: "Created!",
-      error: "Error creating document",
+      error: "Error creating note",
     });
   }
 
@@ -179,7 +179,7 @@ export default function MainNav() {
           isMobile && "left-0 w-full",
         )}
       >
-        {params.noteId ? (
+        {!!params.noteId ? (
           <Navbar isCollapsed={isCollapsed} onResetWidth={resetSidebarWidth} />
         ) : (
           <nav className="w-full bg-transparent px-3 py-2">
@@ -187,13 +187,6 @@ export default function MainNav() {
           </nav>
         )}
       </div>
-      {!!params.noteId ? (
-        <Navbar isCollapsed={isCollapsed} onResetWidth={resetSidebarWidth} />
-      ) : (
-        <nav className="w-full bg-transparent px-3 py-2">
-          {isCollapsed && <MenuIcon onClick={resetSidebarWidth} role="button" className="h-6 w-6" />}
-        </nav>
-      )}
     </>
   );
 }

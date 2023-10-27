@@ -7,6 +7,7 @@ import { icons } from "@/lib/icons";
 import { Toaster } from "react-hot-toast";
 import { toastOptions } from "@/lib/toastOptions";
 import ModalProvider from "@/components/modals/ModalProvider";
+import { EdgeStoreProvider } from "@/lib/edgestore";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,9 +23,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <ConvexProvider>
-            {children}
-            <Toaster toastOptions={toastOptions} position="top-right" />
-            <ModalProvider />
+            <EdgeStoreProvider>
+              {children}
+              <Toaster toastOptions={toastOptions} position="top-right" />
+              <ModalProvider />
+            </EdgeStoreProvider>
           </ConvexProvider>
         </ThemeProvider>
       </body>

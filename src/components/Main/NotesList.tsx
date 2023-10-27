@@ -10,13 +10,13 @@ import { cn } from "@/lib/utils";
 import { FileIcon } from "lucide-react";
 import ItemSkeleton from "../Skeletons/ItemSkeleton";
 
-type DocumentListProps = {
+type NotesListProps = {
   parentNoteId?: Id<"notes">;
   level?: number;
   data?: Doc<"notes">[];
 };
 
-export default function NotesList({ parentNoteId, level = 0 }: DocumentListProps) {
+export default function NotesList({ parentNoteId, level = 0 }: NotesListProps) {
   const params = useParams();
   const router = useRouter();
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
@@ -62,7 +62,7 @@ export default function NotesList({ parentNoteId, level = 0 }: DocumentListProps
             id={note._id}
             label={note.title}
             noteIcon={note.icon}
-            active={params.documentId === note._id}
+            active={params.noteId === note._id}
             Icon={FileIcon}
             level={level}
             expanded={expanded[note._id]}

@@ -43,7 +43,7 @@ export default function Archived() {
       error: "Failed to delete.",
     });
 
-    if (params.documentId === noteId) {
+    if (params.noteId === noteId) {
       router.push("/notes");
     }
   }
