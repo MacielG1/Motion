@@ -2,14 +2,13 @@
 
 import { useRouter } from "next/navigation";
 import { Id } from "../../../convex/_generated/dataModel";
-import { useUser } from "@clerk/clerk-react";
+import { SignOutButton, useUser } from "@clerk/clerk-react";
 import { useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { DropdownMenu } from "@radix-ui/react-dropdown-menu";
 import { DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { MoreHorizontal, Trash } from "lucide-react";
-import { Skeleton } from "../ui/skeleton";
 import toast from "react-hot-toast";
 
 type Props = {
@@ -48,6 +47,9 @@ export default function Menu({ noteId }: Props) {
         <div className="p-2 text-xs text-muted-foreground">
           Last edited by: <span className="font-semibold">{user?.fullName}</span>
         </div>
+        <DropdownMenuItem className="ml-1 cursor-pointer text-muted-foreground dark:bg-neutral-900">
+          <SignOutButton>Logout</SignOutButton>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

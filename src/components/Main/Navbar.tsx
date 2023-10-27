@@ -8,6 +8,8 @@ import Banner from "./Banner";
 import Title from "./Title";
 import Publish from "./Publish";
 import Menu from "./Menu";
+import { DropdownMenuItem } from "../ui/dropdown-menu";
+import { SignOutButton } from "@clerk/clerk-react";
 
 type Props = {
   isCollapsed: boolean;

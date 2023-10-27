@@ -154,7 +154,7 @@ export default function MainNav() {
           <Item onClick={handleCreateNote} Icon={Plus} label="Add Note" />
           <Popover>
             <PopoverTrigger className="mt-4 w-full">
-              <Item label="Trash" Icon={Trash} />
+              <Item label="Archived" Icon={Trash} />
             </PopoverTrigger>
             <PopoverContent className="w-72 p-0" side={isMobile ? "bottom" : "right"}>
               <Archived />

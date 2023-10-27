@@ -39,7 +39,7 @@ export default function Banner({ noteId }: Props) {
 
   return (
     <div className="flex w-full items-center justify-center gap-x-2 bg-rose-500 p-2 text-center text-sm text-white">
-      <p className="mx-1">This page is in the Trash</p>
+      <p className="mx-1">This page is Archived</p>
       <Button
         size="sm"
         onClick={onRestore}

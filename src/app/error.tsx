@@ -10,7 +10,7 @@ export default function Error() {
       <Image src="/error.jpg" width="300" height="300" alt="Error" />
       <p className="text-xl font-semibold">An Error Occurred</p>
       <Button asChild>
-        <Link href="/documents">Return</Link>
+        <Link href="/notes">Return</Link>
       </Button>
     </section>
   );

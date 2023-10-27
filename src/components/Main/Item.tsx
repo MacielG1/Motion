@@ -1,4 +1,4 @@
-import { ChevronDownIcon, ChevronRightIcon, LucideIcon, MoreHorizontal, Plus, Trash } from "lucide-react";
+import { ChevronDownIcon, ChevronRightIcon, ExternalLink, LucideIcon, MoreHorizontal, Plus, Trash } from "lucide-react";
 import { Id } from "../../../convex/_generated/dataModel";
 import { cn } from "@/lib/utils";
 import { useMutation } from "convex/react";
@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { useUser } from "@clerk/clerk-react";
 import toast from "react-hot-toast/headless";
+import Link from "next/link";
 
 type ItemProps = {
   onClick?: () => void;
@@ -25,7 +26,6 @@ type ItemProps = {
 export default function Item({ onClick, Icon, label, id, noteIcon, active, expanded, isSearch, isSettings, level, onExpand }: ItemProps) {
   const router = useRouter();
   const ChevronIcon = expanded ? ChevronDownIcon : ChevronRightIcon;
-  const { user } = useUser();
 
   const createNote = useMutation(api.notes.createNote);
   const archiveNote = useMutation(api.notes.archiveNote);
@@ -60,9 +60,9 @@ export default function Item({ onClick, Icon, label, id, noteIcon, active, expan
     });
 
     toast.promise(res, {
-      loading: "Moving to trash...",
-      success: "Moved to trash!",
-      error: "Error moving to trash",
+      loading: "Moving to archive...",
+      success: "Moved to archive!",
+      error: "Error moving to archive",
     });
   }
 
@@ -113,13 +113,14 @@ export default function Item({ onClick, Icon, label, id, noteIcon, active, expan
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-60" align="start" side="right" forceMount>
               <DropdownMenuItem onClick={onArchive} className="cursor-pointer">
-                <Trash className="mr-2 h-4 w-4" /> Delete
+                <Trash className="mr-2 h-4 w-4" /> Archive
               </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <div className="p-2 text-sm text-muted-foreground">
-                Last edited by:
-                <span className="font-medium">{user?.fullName}</span>
-              </div>
+              <DropdownMenuItem className="cursor-pointer" asChild>
+                <Link href={`/notes/${id}`} target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="mr-2 h-4 w-4" />
+                  Open in a New Tab
+                </Link>
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           <span className="ml-auto flex h-full items-center justify-center rounded-sm p-[0.15rem] opacity-0 hover:bg-neutral-300 group-hover:opacity-100 hover:dark:bg-neutral-600">
