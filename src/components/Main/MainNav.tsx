@@ -146,7 +146,7 @@ export default function MainNav() {
         <div>
           <UserItem />
           <Item onClick={search.onOpen} Icon={Search} label="Search" isSearch />
-          <Item onClick={settings.onOpen} Icon={Settings} label="Settings" />
+          <Item onClick={settings.onOpen} Icon={Settings} label="Settings" isSettings />
           <Item onClick={handleCreateNote} Icon={PlusCircle} label="New Note" />
         </div>
         <div className="py-1">

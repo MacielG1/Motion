@@ -6,6 +6,6 @@ Motion is an open-source web app that aims to replicate the functionality of Not
 
 ## Features
 
-- Create, edit, and organize notes and documents.
+- Create, edit, and organize your notes
 - Rich text editing and media embedding.
 - Publish notes with others.

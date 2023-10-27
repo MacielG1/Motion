@@ -52,7 +52,3 @@ export default function Menu({ noteId }: Props) {
     </DropdownMenu>
   );
 }
-
-Menu.Skeleton = function MenuSkeleton() {
-  return <Skeleton className="h-10 w-10" />;
-};
