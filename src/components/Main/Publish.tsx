@@ -31,11 +31,17 @@ export default function Publish({ initialData }: Props) {
       setIsSubmitting(false);
     });
 
-    toast.promise(promise, {
-      loading: "Publishing...",
-      success: "Published!",
-      error: "Error publishing",
-    });
+    toast.promise(
+      promise,
+      {
+        loading: "Publishing...",
+        success: "Published!",
+        error: "Error publishing",
+      },
+      {
+        position: "bottom-right",
+      },
+    );
   }
 
   function onUnpublish() {
@@ -48,11 +54,17 @@ export default function Publish({ initialData }: Props) {
       setIsSubmitting(false);
     });
 
-    toast.promise(promise, {
-      loading: "Unpublishing...",
-      success: "Unpublished!",
-      error: "Error unpublishing",
-    });
+    toast.promise(
+      promise,
+      {
+        loading: "Unpublishing...",
+        success: "Unpublished!",
+        error: "Error unpublishing",
+      },
+      {
+        position: "bottom-right",
+      },
+    );
   }
 
   function onCopyUrl() {

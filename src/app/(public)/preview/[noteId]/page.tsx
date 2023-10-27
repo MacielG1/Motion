@@ -3,7 +3,7 @@ import { useMutation, useQuery } from "convex/react";
 import { Id } from "../../../../../convex/_generated/dataModel";
 import { api } from "../../../../../convex/_generated/api";
 import Toolbar from "@/components/Toolbar";
-import CoverImage from "@/components/Main/CoverImage";
+import CoverImage from "@/components/CoverImage";
 import dynamic from "next/dynamic";
 import { useMemo } from "react";
 import CoverSkeleton from "@/components/Skeletons/CoverSkeleton";
@@ -13,11 +13,11 @@ type Props = {
     noteId: Id<"notes">;
   };
 };
-export default function NoteIdPage({ params }: Props) {
+export default function NotePreviePage({ params }: Props) {
   const note = useQuery(api.notes.getNoteById, {
     noteId: params.noteId,
   });
-  const update = useMutation(api.notes.updateNote);
+  const updateNote = useMutation(api.notes.updateNote);
 
   const Editor = useMemo(
     () =>
@@ -41,7 +41,7 @@ export default function NoteIdPage({ params }: Props) {
   }
 
   function onChange(content: string) {
-    update({
+    updateNote({
       id: params.noteId,
       content,
     });
@@ -49,10 +49,10 @@ export default function NoteIdPage({ params }: Props) {
 
   return (
     <section className="pb-40">
-      <CoverImage url={note?.coverImage} />
+      <CoverImage preview="" url={note?.coverImage} />
       <div className="mx-auto md:max-w-3xl lg:max-w-4xl">
-        <Toolbar initialData={note} />
-        <Editor onChange={onChange} initialContent={note.content} />
+        <Toolbar preview initialData={note} />
+        <Editor editable={false} onChange={onChange} initialContent={note.content} />
       </div>
     </section>
   );

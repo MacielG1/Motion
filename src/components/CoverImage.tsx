@@ -7,9 +7,9 @@ import { useCoverImage } from "@/hooks/useCoverImage";
 import { useMutation } from "convex/react";
 import { useParams } from "next/navigation";
 import { useEdgeStore } from "@/lib/edgestore";
-import { api } from "../../../convex/_generated/api";
-import { Id } from "../../../convex/_generated/dataModel";
-import { Button } from "../ui/button";
+import { api } from "../../convex/_generated/api";
+import { Id } from "../../convex/_generated/dataModel";
+import { Button } from "./ui/button";
 
 type Props = {
   url?: string;

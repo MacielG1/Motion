@@ -68,7 +68,7 @@ export default function Archived() {
         />
       </div>
       <div className="mt-2 px-1 pb-2">
-        <p className="hidden text-center text-xs text-muted-foreground last:block">No Notes Found</p>
+        <p className="hidden text-center text-xs text-muted-foreground last:block">No Notes in Trash</p>
         {filteredNotes?.map((note) => (
           <div
             className="flex w-full items-center justify-between rounded-sm text-sm text-primary hover:bg-primary/5"

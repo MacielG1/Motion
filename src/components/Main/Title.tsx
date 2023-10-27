@@ -24,7 +24,7 @@ export default function Title({ initialData }: Props) {
     setIsEditing(true);
     setTimeout(() => {
       inputRef.current?.focus();
-      inputRef.current?.setSelectionRange(0, inputRef.current.value.length);
+      // inputRef.current?.setSelectionRange(0, inputRef.current.value.length);
     }, 0);
   }
 
@@ -56,11 +56,11 @@ export default function Title({ initialData }: Props) {
           onChange={onChange}
           onKeyDown={onKeyDown}
           value={title}
-          className="h-7 px-2 focus-visible:ring-transparent"
+          className="h-7 w-[25rem] px-2 focus-visible:ring-transparent"
         />
       ) : (
-        <Button onClick={toggleInput} variant="ghost" size="sm" className="h-auto p-1 font-normal">
-          <span className="truncate">{initialData.title}</span>
+        <Button onClick={toggleInput} variant="ghost" size="sm" className="h-auto p-2 text-left font-normal">
+          <span className="min-w-[10rem] max-w-6xl truncate">{initialData.title}</span>
         </Button>
       )}
     </div>
